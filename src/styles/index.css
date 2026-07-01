@@ -1,0 +1,436 @@
+/* ================================================================
+   Macro Rides — Global Stylesheet
+   Sections:
+     1. Reset & base
+     2. App shell (header, body, main)
+     3. Sidebar
+     4. Stat cards
+     5. Progress bar
+     6. Status pill
+     7. Legend
+     8. Controls / buttons
+     9. Error screen
+    10. Zone label (Leaflet tooltip override)
+    11. Responsive breakpoints
+================================================================ */
+
+/* ── 1. Reset & base ─────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+/* ── 2. App shell ────────────────────────────────────────────── */
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding: 0.85rem 1.25rem;
+  background: #111827;
+  border-bottom: 1px solid #1f2937;
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+.app-header__brand {
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.03em;
+  color: #f8fafc;
+}
+
+.app-header__subtitle {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.app-body {
+  flex: 1;
+  display: flex;
+  min-height: 0; /* allow children to shrink below content height */
+}
+
+.app-main {
+  flex: 1;
+  position: relative;
+  min-width: 0;
+}
+
+.map-canvas {
+  width: 100%;
+  height: 100%;
+}
+
+/* ── 3. Sidebar ──────────────────────────────────────────────── */
+.sidebar {
+  width: 272px;
+  flex-shrink: 0;
+  background: #111827;
+  border-right: 1px solid #1f2937;
+  padding: 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.sidebar__section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.sidebar__heading {
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #475569;
+}
+
+/* ── 4. Stat cards ───────────────────────────────────────────── */
+.stat-grid {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.stat-grid__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #1e293b;
+  border-radius: 8px;
+  padding: 0.55rem 0.75rem;
+  gap: 0.5rem;
+}
+
+/* Progress item stacks vertically */
+.stat-grid__item--column {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.35rem;
+}
+
+.stat-grid__item dt {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  flex-shrink: 0;
+}
+
+.stat-grid__item dd {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #f8fafc;
+  text-align: right;
+}
+
+.stat-grid__value--eligible {
+  color: #4ade80 !important;
+}
+
+/* ── 5. Progress bar ─────────────────────────────────────────── */
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background: #334155;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-bar__fill {
+  height: 100%;
+  background: linear-gradient(90deg, #2563eb, #22c55e);
+  border-radius: 999px;
+  transition: width 0.9s ease-out; /* animate between ticks */
+}
+
+.progress-bar__label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #94a3b8;
+  text-align: right;
+}
+
+/* ── 6. Status pill ──────────────────────────────────────────── */
+.status-pill {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  letter-spacing: 0.04em;
+}
+
+.status-pill--running {
+  background: #064e3b;
+  color: #4ade80;
+}
+
+.status-pill--paused {
+  background: #451a03;
+  color: #fbbf24;
+}
+
+/* ── 7. Legend ───────────────────────────────────────────────── */
+.legend-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.legend-list__item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.8rem;
+  color: #cbd5e1;
+}
+
+.legend-swatch {
+  display: inline-block;
+  flex-shrink: 0;
+  border: 1.5px solid;
+}
+
+.legend-swatch--dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+}
+
+.legend-swatch--line {
+  width: 18px;
+  height: 4px;
+  border-radius: 2px;
+  border: none;
+}
+
+.legend-swatch--area {
+  width: 16px;
+  height: 11px;
+  border-radius: 3px;
+  opacity: 0.65;
+}
+
+.legend-swatch--zone {
+  width: 16px;
+  height: 11px;
+  border-radius: 3px;
+  opacity: 0.65;
+  border-style: dashed !important;
+  border-width: 2px !important;
+}
+
+/* ── 8. Controls / buttons ───────────────────────────────────── */
+.controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.controls__button {
+  flex: 1;
+  border: none;
+  border-radius: 8px;
+  padding: 0.55rem 0.5rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter 0.15s ease, transform 0.1s ease;
+  letter-spacing: 0.02em;
+}
+
+.controls__button:hover {
+  filter: brightness(1.12);
+}
+
+.controls__button:active {
+  transform: scale(0.97);
+}
+
+/* Keyboard focus — visible ring on Tab navigation */
+.controls__button:focus-visible {
+  outline: 2px solid #60a5fa;
+  outline-offset: 2px;
+}
+
+.controls__button--start {
+  background: #16a34a;
+  color: #f0fdf4;
+}
+
+.controls__button--stop {
+  background: #dc2626;
+  color: #fef2f2;
+}
+
+.controls__button--reset {
+  background: #334155;
+  color: #e2e8f0;
+}
+
+/* ── 9. Error screen ─────────────────────────────────────────── */
+.error-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  height: 100%;
+  padding: 2rem;
+  text-align: center;
+  background: #111827;
+  color: #e2e8f0;
+}
+
+.error-screen__icon {
+  font-size: 2.5rem;
+}
+
+.error-screen__title {
+  font-size: 1.1rem;
+  color: #f8fafc;
+}
+
+.error-screen__message {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin: 0;
+  max-width: 32rem;
+}
+
+.error-screen__retry {
+  margin-top: 0.5rem;
+  padding: 0.45rem 1.25rem;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+
+.error-screen__retry:hover {
+  filter: brightness(1.1);
+}
+
+.error-screen__retry:focus-visible {
+  outline: 2px solid #60a5fa;
+  outline-offset: 2px;
+}
+
+/* ── 10. Zone labels (Leaflet tooltip override) ───────────────── */
+.zone-label {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #a16207;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  pointer-events: none;
+  /* Override Leaflet's default tooltip arrow */
+  padding: 0;
+}
+
+.zone-label::before {
+  display: none;
+}
+
+/* ── 11. Responsive breakpoints ──────────────────────────────── */
+/*
+ * Desktop (default): sidebar is a fixed-width column left of the map.
+ *
+ * ≤ 900px: sidebar stacks above the map with a horizontal section
+ *   layout, preserving usable map space.
+ *
+ * ≤ 520px: single-column layout for phones; sidebar sections stack
+ *   vertically and the map fills the remaining viewport height.
+ */
+
+@media (max-width: 900px) {
+  .app-body {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    max-height: 36vh;
+    border-right: none;
+    border-bottom: 1px solid #1f2937;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    overflow-y: auto;
+  }
+
+  .sidebar__section {
+    flex: 1 1 200px;
+    min-width: 180px;
+  }
+
+  .app-main {
+    flex: 1;
+    min-height: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .app-header {
+    flex-wrap: wrap;
+    padding: 0.6rem 0.85rem;
+    gap: 0.25rem;
+  }
+
+  .app-header__subtitle {
+    flex-basis: 100%;
+    font-size: 0.78rem;
+  }
+
+  .sidebar {
+    flex-direction: column;
+    max-height: 42vh;
+    padding: 0.65rem 0.85rem;
+  }
+
+  .sidebar__section {
+    flex: none;
+    width: 100%;
+  }
+
+  .controls__button {
+    padding: 0.5rem 0.4rem;
+    font-size: 0.78rem;
+  }
+}
